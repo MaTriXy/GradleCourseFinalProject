@@ -18,6 +18,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "default"
+
+    productFlavors {
+        free {
+            dimension "default"
+            buildConfigField 'boolean', 'isPaid', 'false'
+
+            dependencies {
+                compile 'com.google.android.gms:play-services-ads:10.2.6'
+            }
+        }
+
+        paid {
+            dimension "default"
+            buildConfigField 'boolean', 'isPaid', 'true'
+        }
+    }
 }
 
 dependencies {
@@ -26,7 +44,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.google.android.gms:play-services-ads:10.2.6'
     compile project(':jokesProvider')
     compile project(':jokesDisplayer')
+    compile 'com.google.code.findbugs:jsr305:2.0.1'
+    compile project(path: ':jokesBackend', configuration: 'android-endpoints')
 }
